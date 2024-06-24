@@ -1,0 +1,57 @@
+1. Welche Eigenschaften hat Java ?
+   Antworten:
+
+- Java ist allgemein verfügbar
+- unterstützt viele moderne Abstraktionskonzepte
+- anfängerfreundlich
+- Java ist überall verbreitet
+- hat eine große und freundliche Community
+- general purpose
+- OOP
+- plattformunabhängig
+
+2. Was versteht man unter kompilieren ?
+   Antworten:
+
+- aus einer High-Level Programmiersprache wie Java, eine vom Computer lesbare Version machen
+- TODO: Datei **kompilieren**, indem wir **javac MeinCode.java** in unser Terminal eintippen
+- Java wurde entwickelt, um von uns, vom Programmierer, verstanden zu werden, denn die Sprache vom Computer ist weitaus primitiver & ursprünglicher
+- Compiler übersetzt Quellcode in plattformunabhängigen Bytecode
+- Compiler nimmt die .java Datei und macht daraus eine **gleichlautende** Datei, jedoch in der Computersprachen-Version .class
+
+3. Folgendes Szenario: du schreibst dein Programm, kompilierst es und lässt es laufen. Danach veränderst du dein Programm und möchtest es nach der Veränderung laufen lassen. Musst du es erneut kompilieren ?
+   Antworten:
+   In der Regel muss man Programm nach jeder Änderung erneut kompilieren, bevor man es ausführt. Dies liegt daran, dass die Kompilierung den Quellcode in ausführbaren Maschinencode umwandelt.
+
+4. Welche Sachen muss man installieren, um mit Java programmieren zu können ?
+   Java Development Kit (JDK),
+   Java Runtime Environment (JRE)
+   Integrierte Entwicklungsumgebung (IDE) oder Texteditor
+   Build-Management-Tool(Maven)
+
+- Was ist die JVM ?
+  JVM = Java Virtual Machine.
+  dient dazu, Java-Programme auszuführen
+
+  4.1 **Zwischencode (Bytecode):** Java-Code schreiben → durch Compiler in Bytecode übersetzt
+
+      → Bytecode = plattformunabhängige Zwischensprache
+
+  4.2 **Plattformunabhängigkeit:** Die JVM ermöglicht die Ausführung von Java-Bytecode auf verschiedenen Betriebssystemen, ohne dass der Code neu kompiliert werden muss. Dies bedeutet, dass das gleiche Java-Programm auf verschiedenen Plattformen(auf verschiedenen Betriebssystemen und Architekturen) ausgeführt werden kann, solange eine JVM für die jeweilige Plattform verfügbar ist.
+
+  4.3 Interpretation und Just-In-Time-Kompilierung (JIT):\*\*
+  Die JVM kann den Bytecode interpretieren oder ihn in nativen Maschinencode für die tatsächliche Hardware übersetzen. Die JIT-Kompilierung verbessert die Leistung, indem der Code zur Laufzeit in Maschinencode umgewandelt wird.
+
+- Was ist das JDK ?
+  Antworten:
+  Java Development Kit (JDK) ist ein Software-Entwicklungspaket
+  Alle notwendigen Werkzeuge und Bibliotheken enthält, die Entwickler zum Schreiben, Kompilieren, Debuggen und Ausführen von Java-Anwendungen benötigen.
+  Java Compiler (javac)
+  Java Virtual Machine (JVM)
+  Java Runtime Environment (JRE)
+  Bibliotheken
+  Entwicklungswerkzeuge: wie z.B. javadoc (zum Erstellen von API-Dokumentationen), jdb (zum Debuggen von Java-Programmen),jar (zum Packen von Java-Klassen in JAR-Dateien).
+
+- Wie würdest du einem Nicht-ITler ein Terminal erklären ?
+  Antworten:
+  Ein Terminal, auch Kommandozeile oder Konsole genannt, ist ein Text-basierter Zugang zu Computer, bei dem man Befehle direkt eingibt, anstatt mit einer grafischen Benutzeroberfläche (GUI) zu interagieren.
