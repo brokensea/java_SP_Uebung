@@ -46,7 +46,7 @@ public class SchleifenUmwandeln {
     private void rechnenInForSchleifer() {
 
         for (int a = 2; a < 7; a += 2) {
-            System.out.println(a);
+            System.out.println("a +" + a);
         }
 
     }
