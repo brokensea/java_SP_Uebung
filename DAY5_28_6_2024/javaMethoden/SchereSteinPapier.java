@@ -16,7 +16,7 @@ public class SchereSteinPapier {
     final int SCHERE = 0;
     final int STEIN = 1;
     final int PAPIER = 2;
-    // final int EXIT = 3;
+    final int EXIT = 3;
 
     public static void main(String[] args) {
         SchereSteinPapier schereSteinPapier = new SchereSteinPapier();
@@ -29,13 +29,18 @@ public class SchereSteinPapier {
         boolean weiterspielen = true;
 
         try {
-            while (weiterspielen) {
+            while (true) {
                 System.out.print("Bitte geben Sie eine Zahl von 0 bis 3 ein: ");
 
                 boolean istUngülstig = true;
                 int benutzerWahl;
                 do {
                     benutzerWahl = scanner.nextInt();
+                    if (benutzerWahl == EXIT) {
+                        System.out.println("3 eingeben: Ausfahrt");
+                        return;
+                    }
+
                     if (benutzerWahl < 0 || benutzerWahl > 2) {
                         System.out.print("Ungültige Eingabe. Bitte geben Sie eine Zahl von 0 bis 2 ein: ");
                         continue;
@@ -43,18 +48,10 @@ public class SchereSteinPapier {
                     istUngülstig = false;
                 } while (istUngülstig);
 
-                // while (benutzerWahl < 0 || benutzerWahl > 3) {
-                // System.out.print("Ungültige Eingabe. Bitte geben Sie eine Zahl von 0 bis 3
-                // ein: ");
-                // benutzerWahl = scanner.nextInt();
-                // }
-
                 int pcWahl = random.nextInt(3);
-
                 TeilNahmer benutzer = new TeilNahmer("T1", benutzerWahl);
                 TeilNahmer pc = new TeilNahmer("PC", pcWahl);
                 System.out.println("PC wählt: " + pcWahl + " (" + pc.getWahlString() + ")");
-
                 weiterspielen = vergleichenSchereSteinPapier(benutzer, pc);
             }
         } finally {
