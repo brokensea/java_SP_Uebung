@@ -13,6 +13,10 @@ import java.util.Scanner;
 // 4.**Spielablauf**:-Das Programm fordert den Benutzer auf,eine Wahl zu treffen(0 für Schere,1 für Stein,2 für Papier,3 zum Beenden).-Die Wahl des Benutzers und die zufällige Wahl des Computers werden angezeigt.-Das Ergebnis der Runde wird basierend auf den Spielregeln ermittelt und angezeigt.-Das Spiel läuft in einer Schleife,bis der Benutzer sich entscheidet,das Spiel zu beenden(Eingabe 3).
 
 public class SchereSteinPapier {
+    final int SCHERE = 0;
+    final int STEIN = 1;
+    final int PAPIER = 2;
+    // final int EXIT = 3;
 
     public static void main(String[] args) {
         SchereSteinPapier schereSteinPapier = new SchereSteinPapier();
@@ -27,13 +31,25 @@ public class SchereSteinPapier {
         try {
             while (weiterspielen) {
                 System.out.print("Bitte geben Sie eine Zahl von 0 bis 3 ein: ");
-                int benutzerWahl = scanner.nextInt();
-                while (benutzerWahl < 0 || benutzerWahl > 3) {
-                    System.out.print("Ungültige Eingabe. Bitte geben Sie eine Zahl von 0 bis 3 ein: ");
-                    benutzerWahl = scanner.nextInt();
-                }
 
-                int pcWahl = random.nextInt(4);
+                boolean istUngülstig = true;
+                int benutzerWahl;
+                do {
+                    benutzerWahl = scanner.nextInt();
+                    if (benutzerWahl < 0 || benutzerWahl > 2) {
+                        System.out.print("Ungültige Eingabe. Bitte geben Sie eine Zahl von 0 bis 2 ein: ");
+                        continue;
+                    }
+                    istUngülstig = false;
+                } while (istUngülstig);
+
+                // while (benutzerWahl < 0 || benutzerWahl > 3) {
+                // System.out.print("Ungültige Eingabe. Bitte geben Sie eine Zahl von 0 bis 3
+                // ein: ");
+                // benutzerWahl = scanner.nextInt();
+                // }
+
+                int pcWahl = random.nextInt(3);
 
                 TeilNahmer benutzer = new TeilNahmer("T1", benutzerWahl);
                 TeilNahmer pc = new TeilNahmer("PC", pcWahl);
@@ -60,29 +76,22 @@ public class SchereSteinPapier {
             return true;
         }
         switch (benutzerWahl) {
-            case 0 -> {
-                if (pcWahl == 1 || pcWahl == 3) {
+            case SCHERE -> {
+                if (pcWahl == STEIN) {
                     pc.setGewinnen(true);
                 } else {
                     benutzer.setGewinnen(true);
                 }
             }
-            case 1 -> {
-                if (pcWahl == 2 || pcWahl == 3) {
+            case STEIN -> {
+                if (pcWahl == PAPIER) {
                     pc.setGewinnen(true);
                 } else {
                     benutzer.setGewinnen(true);
                 }
             }
-            case 2 -> {
-                if (pcWahl == 0 || pcWahl == 3) {
-                    pc.setGewinnen(true);
-                } else {
-                    benutzer.setGewinnen(true);
-                }
-            }
-            case 3 -> {
-                if (pcWahl == 0 || pcWahl == 2) {
+            case PAPIER -> {
+                if (pcWahl == SCHERE) {
                     pc.setGewinnen(true);
                 } else {
                     benutzer.setGewinnen(true);
@@ -133,7 +142,6 @@ class TeilNahmer {
             case 0 -> this.wahlString = "Schere";
             case 1 -> this.wahlString = "Stein";
             case 2 -> this.wahlString = "Papier";
-            case 3 -> this.wahlString = "Eidechse";
             default -> this.wahlString = "Ungültige Wahl";
         }
     }
