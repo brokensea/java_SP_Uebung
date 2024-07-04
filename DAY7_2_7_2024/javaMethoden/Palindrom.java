@@ -15,7 +15,7 @@ public class Palindrom {
 
         System.out.println(palindrom.isPalindrom("Anna"));
 
-        System.out.println(palindrom.isPalindrom("Amok Oma"));
+        System.out.println(palindrom.isPalindrom("Amok Oma")); // fals
         System.out.println(palindrom.isPalindrom("Ein Esel lese nie"));
         System.out.println(palindrom.isPalindrom("Lagerregal"));
 
@@ -23,7 +23,6 @@ public class Palindrom {
 
     private boolean isPalindrom(String inputString) {
         String lowercaseInput = inputString.toLowerCase();
-
         char[] stringToCharArray = lowercaseInput.toCharArray();
         char[] reverseStringToCharArray = reverse(lowercaseInput).toCharArray();
         return Arrays.equals(stringToCharArray, reverseStringToCharArray);

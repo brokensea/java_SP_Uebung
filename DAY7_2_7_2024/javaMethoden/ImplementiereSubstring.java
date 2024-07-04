@@ -7,10 +7,8 @@ package DAY7_2_7_2024.javaMethoden;
 // -die substring-Methode extrahiert einen Teilstring aus einem gegebenen String-die Methode gibt den Teilstring von der Position start(inklusive)bis end(exklusive)zurück-wenn start oder end ungültige Werte haben,soll die Methode null zurückgeben
 public class ImplementiereSubstring {
     public static void main(String[] args) {
-
         ImplementiereSubstring implementiereSubstring = new ImplementiereSubstring();
         // implementiereSubstring.substring("null", 2);
-
         System.out.println(implementiereSubstring.substring("Hello, World!", 7)); // : "World!"
         System.out.println(implementiereSubstring.substring("abcdef", 3)); // : "def"
 
@@ -29,7 +27,6 @@ public class ImplementiereSubstring {
             output.append(stringToCharArry[indexJ]);
         }
         return output.toString();
-
     }
 
     private String substring(String input, int beginIndex, int endIndex) {
