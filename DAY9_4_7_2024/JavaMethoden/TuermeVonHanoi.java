@@ -18,7 +18,7 @@ public class TuermeVonHanoi {
     public static void main(String[] args) {
         int n = 3; // number of discs
         TuermeVonHanoi tuermeVonHanoi = new TuermeVonHanoi();
-        tuermeVonHanoi.solveHanoi(n, "A_Staff", "C_Staff", "B_Staff");
+        tuermeVonHanoi.solveHanoi(n, "A_Staff", " B_Staff", "C_Staff");
     }
 
     private void solveHanoi(int n, String startStaff, String helpStaff, String targetStaff) {
@@ -33,6 +33,16 @@ public class TuermeVonHanoi {
         solveHanoi(n - 1, helpStaff, startStaff, targetStaff);
     }
 }
+
+// 递归调用： 移动 n-1 个盘子从起始柱（startStaff）到辅助柱（helpStaff）。
+
+// 移动盘子： 将第 n 个盘子直接从起始柱（startStaff）移动到目标柱（targetStaff）。
+
+// 递归调用： 将之前移动到辅助柱（helpStaff）上的 n-1
+// 个盘子，从辅助柱（helpStaff）移动到目标柱（targetStaff），以起始柱（startStaff）作为辅助。
+
+// 这三个步骤构成了递归解法的核心，每次递归都处理一个规模较小的子问题，直到最终将所有盘子从起始柱移动到目标柱。
+
 // 当 n = 3 时，递归过程如下：
 
 // 初始调用:
