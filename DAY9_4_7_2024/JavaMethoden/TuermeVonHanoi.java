@@ -16,23 +16,21 @@ import java.util.Stack;
 public class TuermeVonHanoi {
 
     public static void main(String[] args) {
-        int n = 3; // number of disc
+        int n = 3; // number of discs
         TuermeVonHanoi tuermeVonHanoi = new TuermeVonHanoi();
         tuermeVonHanoi.solveHanoi(n, "A_Staff", "C_Staff", "B_Staff");
-
-        // tuermeVonHanoi.solveHanoiStack(n, 'A', 'B', 'C');
-
     }
 
-    private void solveHanoi(int n, String startStaff_A, String helpStaff_B, String targetStaff_C) {
+    private void solveHanoi(int n, String startStaff, String helpStaff, String targetStaff) {
         if (n == 1) {
-            System.out.println("Verschiebe Scheibe 1  von " + startStaff_A + " nach " + targetStaff_C);
+            System.out.println("Verschiebe Scheibe 1 von " + startStaff + " nach " + targetStaff);
             return;
         }
-        solveHanoi(n - 1, startStaff_A, helpStaff_B, targetStaff_C);
-        System.out.println("Verschiebe Scheibe " + n + " von " + startStaff_A + " nach " + targetStaff_C); // because of
-                                                                                                           // stack
-        solveHanoi(n - 1, helpStaff_B, targetStaff_C, startStaff_A);
+
+        solveHanoi(n - 1, startStaff, targetStaff, helpStaff);
+        System.out.println("Verschiebe Scheibe " + n + " von " + startStaff + " nach " + targetStaff); // because of
+                                                                                                       // stack
+        solveHanoi(n - 1, helpStaff, startStaff, targetStaff);
     }
 }
 // 当 n = 3 时，递归过程如下：

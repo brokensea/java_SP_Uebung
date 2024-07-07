@@ -19,6 +19,8 @@ public class PasswortGenerator {
         System.out.println(outputFirst);
         // System.out.println(outputLast);
         System.out.println(passwortGenerator.getStrongerPassword(outputLast));
+        
+        
 
     }
 
