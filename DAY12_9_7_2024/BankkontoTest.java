@@ -1,4 +1,4 @@
-package DAY12_10_7_2024;
+package DAY12_9_7_2024;
 
 public class BankkontoTest {
     public static void main(String[] args) {
