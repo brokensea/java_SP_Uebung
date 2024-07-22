@@ -1,4 +1,4 @@
-package DAY14_11_7_2024.boot;
+package DAY15_11_2024.bootRectoring;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,16 +14,19 @@ public class Boot {
     private int personCount;
     private boolean isLicenceRequired;
     private double pricePerHour;
+    private double discountedPricePerHour;
     private ArrayList<Reservation> reservations;
 
     private static int nextId = 1;
     private int id;
 
-    public Boot(String type, int personCount, boolean isLicenceRequired, double pricePerHour) {
+    public Boot(String type, int personCount, boolean isLicenceRequired, double pricePerHour,
+            double discountedPricePerHour, Bootsverleih bootsverleih) {
         this.setType(type);
         this.setPersonCount(personCount);
         this.setIsLicenceRequired(isLicenceRequired);
         this.setPricePerHour(pricePerHour);
+        this.setDiscountedPricePerHour(discountedPricePerHour);
         this.reservations = new ArrayList<Reservation>();
         this.id = generateUniqueId();
     }
@@ -34,6 +37,16 @@ public class Boot {
 
     private synchronized int generateUniqueId() {
         return nextId++;
+    }
+
+    public void setDiscountedPricePerHour(double discountedPricePerHour) {
+        if (discountedPricePerHour < 0.0)
+            throw new IllegalArgumentException("Discounted price per hour must be positive");
+        this.discountedPricePerHour = discountedPricePerHour;
+    }
+
+    public double getDiscountedPricePerHour() {
+        return discountedPricePerHour;
     }
 
     public void setType(String type) {
@@ -78,49 +91,30 @@ public class Boot {
         return reservations;
     }
 
-    public Reservation addReservation(LocalDateTime from, LocalDateTime to, Person p) {
-        boolean licenceOK = !isLicenceRequired || (isLicenceRequired && p.hasLicence());
+    /**
+     * @param from   LocalDateTime
+     * @param to     LocalDateTime
+     * @param person Person
+     * @return Reservation
+     */
+    public Reservation addReservation(LocalDateTime from, LocalDateTime to, Person person) {
+        boolean licenceOK = !isLicenceRequired || (isLicenceRequired && person.hasLicence());
         if (!licenceOK) {
             throw new IllegalStateException("Licence required to book this boat");
         }
-
         // Check availability based on from and to values
         boolean isAvailable = checkIsAvailable(from, to);
         if (!isAvailable) {
             throw new IllegalStateException("Boat not available, please try a different time");
         }
-
         // Create a new Reservation with the current Boot's ID
-        Reservation reservation = new Reservation(p, from, to, this.getId(), this);
+        Reservation reservation = new Reservation(person, from, to, this.getId(), this);
         reservations.add(reservation);
 
         // Add reservation to person
-        p.addReservation(reservation);
-
+        person.addReservation(reservation);
         return reservation;
     }
-
-    // public Reservation addReservation(LocalDateTime from, LocalDateTime to,
-    // Person p) {
-    // boolean licenceOK = !isLicenceRequired || isLicenceRequired &&
-    // p.hasLicence();
-    // if (!licenceOK)
-    // throw new IllegalStateException("Licence required to book this boat");
-
-    // // check availability based on from and to values!!!
-    // boolean isAvailable = checkIsAvailable(from, to);
-    // if (!isAvailable)
-    // throw new IllegalStateException("Boat not available, please try a different
-    // time");
-
-    // Reservation reservation = new Reservation(p, from, to, this.id);
-    // reservations.add(reservation);
-
-    // // add
-    // p.addReservation(reservation);
-
-    // return reservation;
-    // }
 
     private boolean checkIsAvailable(LocalDateTime from, LocalDateTime to) {
         // if can find a reservation that overlaps --> return false
@@ -137,8 +131,8 @@ public class Boot {
 
     public void printReservations() {
         System.out.println("Reservations of " + this.getType());
-        for (Reservation r : reservations) {
-            System.out.println("\t" + r.toString());
+        for (Reservation reservation : reservations) {
+            System.out.println("\t" + reservation.toString());
         }
     }
 }
