@@ -2,7 +2,7 @@ package DAY20_22_7_2024.javaOOP;
 
 import java.util.*;
 
-public class VerbesserungManagementSystem {
+class EventManagementSystem {
     private List<Event> events = new ArrayList<>();
     private List<Participant> participants = new ArrayList<>();
 
@@ -143,3 +143,25 @@ class Participant {
         this.email = email;
     }
 }
+
+// **Ai Ai Ai, was ist denn hier passiert !?!?!?** 🆘
+
+// Hier seht ihr ein Beispiel für einen schlecht programmierten Event-Manager in
+// Java. Der Code enthält viele häufige Fehler, wie unsaubere Struktur, fehlende
+// Modularität, und mangelnde Fehlerbehandlung.
+
+// Lese und analysiere den vorgegebenen Code. Verbessere diesen Code, indem du
+// ihn nach den SOLID-, DRY- und KISS-Prinzipien umstrukturierst.
+
+// **Ziel der Aufgabe:**
+
+// - **Erkennen von Codequalität:** du sollst lernen, Code zu lesen, der
+// schlecht strukturiert und schwer verständlich ist. Dies fördert ein tieferes
+// Verständnis für gute Programmierpraktiken und Codequalität.
+// - **Refactoring und Code-Reviews:** Entwickler müssen oft bestehenden Code
+// refaktorisieren oder verbessern, um ihn wartbarer und effizienter zu machen.
+// Das Erkennen und Beseitigen von Problemen in schlecht geschriebenem Code ist
+// eine wertvolle Fähigkeit.
+// - **Modularer Code:** Die Übung fördert das Verständnis für modulare
+// Programmierung und die Trennung von Verantwortlichkeiten, was zu
+// wiederverwendbarem und wartbarem Code führt.
