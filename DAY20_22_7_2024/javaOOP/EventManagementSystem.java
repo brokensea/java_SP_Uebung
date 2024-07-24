@@ -3,6 +3,7 @@ package DAY20_22_7_2024.javaOOP;
 import java.util.*;
 
 class EventManagementSystem {
+
     private List<Event> events = new ArrayList<>();
     private List<Participant> participants = new ArrayList<>();
 

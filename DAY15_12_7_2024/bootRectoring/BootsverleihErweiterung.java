@@ -1,4 +1,4 @@
-package DAY15_11_2024.bootRectoring;
+package DAY15_12_7_2024.bootRectoring;
 
 // Das erfolgreiche Bootsverleihunternehmen"AquaCodes"plant,ihre bestehende Verwaltungssoftware zu erweitern,um detailliertere Analysen und effizientere Abläufe zu ermöglichen.
 

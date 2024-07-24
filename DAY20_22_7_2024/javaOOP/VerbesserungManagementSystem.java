@@ -1,27 +1,60 @@
 package DAY20_22_7_2024.javaOOP;
 
 import java.util.*;
+import java.util.function.Function;
 
 public class VerbesserungManagementSystem {
-    private List<Event> events = new ArrayList<>();
-    private List<Participant> participants = new ArrayList<>();
+    private List<Event> events;
+    private List<Participant> participants;
 
-    public void addEvent(String name, Date date, String location, int maxParticipants) {
-        Event event = new Event(name, date, location, maxParticipants);
+    // verbesserung 1
+    public VerbesserungManagementSystem() {
+        this.events = new ArrayList<>();
+        this.participants = new ArrayList<>();
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<Participant> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
+    }
+
+    public void addEvent(String nameEvent, Date date, String locationEvent, int maxParticipants) {
+        Event event = new Event(nameEvent, date, locationEvent, maxParticipants);
         events.add(event);
     }
 
-    public void removeEvent(String name) {
-        Event toRemove = null;
-        for (Event event : events) {
-            if (event.name.equals(name)) {
-                toRemove = event;
+    // verbesserung 2 remove duplicate; removeEvent; removeParticipant; DRY
+    private <T> void remove(List<T> list, String string, Function<T, String> getString) {
+        T toRemove = null;
+        for (T item : list) {
+            if (getString.apply(item).equals(string)) {
+                toRemove = item;
                 break;
             }
         }
         if (toRemove != null) {
-            events.remove(toRemove);
+            list.remove(toRemove);
         }
+
+    }
+
+    public void removeEvent(String nameEvent) {
+        remove(events, nameEvent, Event::getName);
+    }
+
+    public void removeParticipant(String email) {
+        remove(participants, email, Participant::getEmail);
     }
 
     public void addParticipant(String firstName, String lastName, String email) {
@@ -29,39 +62,34 @@ public class VerbesserungManagementSystem {
         participants.add(participant);
     }
 
-    public void removeParticipant(String email) {
-        Participant toRemove = null;
-        for (Participant participant : participants) {
-            if (participant.email.equals(email)) {
-                toRemove = participant;
-                break;
+    // verbesserung 4: Die Logik zum Finden von Veranstaltungen und Teilnehmern kann
+    // in Hilfsmethoden ausgelagert werden, um Wiederholungen zu vermeiden.
+    // Prinzip: Single Responsibility Principle (SRP)
+    private Event findEventByName(String name) {
+        for (Event e : events) {
+            if (e.getName().equals(name)) {
+                return e;
             }
         }
-        if (toRemove != null) {
-            participants.remove(toRemove);
+        return null;
+    }
+
+    private Participant findParticipantByEmail(String email) {
+        for (Participant p : participants) {
+            if (p.getEmail().equals(email)) {
+                return p;
+            }
         }
+        return null;
     }
 
     public void registerParticipantToEvent(String eventName, String participantEmail) {
-        Event event = null;
-        for (Event e : events) {
-            if (e.name.equals(eventName)) {
-                event = e;
-                break;
-            }
-        }
-
-        Participant participant = null;
-        for (Participant p : participants) {
-            if (p.email.equals(participantEmail)) {
-                participant = p;
-                break;
-            }
-        }
+        Event event = findEventByName(eventName);
+        Participant participant = findParticipantByEmail(participantEmail);
 
         if (event != null && participant != null) {
-            if (event.participants.size() < event.maxParticipants) {
-                event.participants.add(participant);
+            if (event.getParticipants().size() < event.getMaxParticipants()) {
+                event.getParticipants().add(participant);
             } else {
                 System.out.println("Maximale Teilnehmerzahl erreicht");
             }
@@ -69,42 +97,44 @@ public class VerbesserungManagementSystem {
     }
 
     public void unregisterParticipantFromEvent(String eventName, String participantEmail) {
-        Event event = null;
-        for (Event e : events) {
-            if (e.name.equals(eventName)) {
-                event = e;
-                break;
-            }
-        }
+        Event event = findEventByName(eventName);
 
         if (event != null) {
-            Participant toRemove = null;
-            for (Participant p : event.participants) {
-                if (p.email.equals(participantEmail)) {
-                    toRemove = p;
-                    break;
-                }
-            }
+            Participant toRemove = findParticipantByEmail(participantEmail);
             if (toRemove != null) {
-                event.participants.remove(toRemove);
+                event.getParticipants().remove(toRemove);
             }
         }
     }
 
+    // verbesserung 4
+    // Die Logik zum Drucken von Informationen sollte in eigene
+    // Formatierungsmethoden ausgelagert werden.
+    // Prinzip: Separation of Concerns
+
+    private void printEventDetails(Event event) {
+        System.out.println("Event: " + event.getName() + ", Ort: " + event.getLocation());
+        for (Participant participant : event.getParticipants()) {
+            System.out.println(
+                    "Teilnehmer: " + participant.getFirstName() + " " + participant.getLastName() + ", E-Mail: "
+                            + participant.getEmail());
+        }
+    }
+
+    private void printParticipantDetails(Participant participant) {
+        System.out.println("Teilnehmer: " + participant.getFirstName() + " " + participant.getLastName() + ", E-Mail: "
+                + participant.getEmail());
+    }
+
     public void displayEvents() {
         for (Event event : events) {
-            System.out.println("Event: " + event.name + ", Ort: " + event.location);
-            for (Participant participant : event.participants) {
-                System.out.println("Teilnehmer: " + participant.firstName + " " + participant.lastName + ", E-Mail: "
-                        + participant.email);
-            }
+            printEventDetails(event);
         }
     }
 
     public void displayParticipants() {
         for (Participant participant : participants) {
-            System.out.println("Teilnehmer: " + participant.firstName + " " + participant.lastName + ", E-Mail: "
-                    + participant.email);
+            printParticipantDetails(participant);
         }
     }
 
@@ -117,29 +147,104 @@ public class VerbesserungManagementSystem {
     }
 }
 
+// verbesserung 3: Kapselung von Feldern : Prinzip: Encapsulation
+// Verstecken von Implementierungsdetails: Felder sind privat und können nur
+// durch Methoden (Getter) verändert werden.
+// Sicherheit: Verhindert direkte Änderungen an den Feldern von außen.
+
 class Event {
-    String name;
-    Date date;
-    String location;
-    int maxParticipants;
-    List<Participant> participants = new ArrayList<>();
+    private String name;
+    private Date date;
+    private String location;
+    private int maxParticipants;
+    private List<Participant> participants;
 
     public Event(String name, Date date, String location, int maxParticipants) {
         this.name = name;
         this.date = date;
         this.location = location;
         this.maxParticipants = maxParticipants;
+        this.participants = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public int getMaxParticipants() {
+        return maxParticipants;
+    }
+
+    public List<Participant> getParticipants() {
+        return participants;
     }
 }
 
 class Participant {
-    String firstName;
-    String lastName;
-    String email;
+    private String firstName;
+    private String lastName;
+    private String email;
 
     public Participant(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }
+
+// verbessertung 1:
+// Vorteile der Verschiebung der Initialisierung in den Konstruktor
+// Höhere Flexibilität:
+
+// Verzögerte Initialisierung: Wenn die Initialisierung der Felder in den
+// Konstruktor verschoben wird, ermöglicht das eine verzögerte Initialisierung.
+// So kann die Initialisierung flexibler an verschiedene Parameter oder
+// Bedingungen angepasst werden.
+// Dynamische Konfiguration: Über den Konstruktor können unterschiedliche
+// Implementierungen oder Konfigurationsoptionen für die Felder verwendet
+// werden, je nach Bedarf.
+// Verbesserte Testbarkeit:
+
+// Einfachere Tests: In Unit-Tests können Objekte mit speziellen
+// Initialisierungen erstellt werden, um bestimmte Konstruktorverhalten zu
+// testen oder die Initialisierung zu überprüfen.
+// Abhängigkeitsinjektion: Es wird möglich, Abhängigkeiten durch den Konstruktor
+// zu injizieren, was für Tests von Vorteil sein kann, da verschiedene
+// Konfigurationen oder Implementierungen verwendet werden können.
+// Bessere Wartbarkeit:
+
+// Klarere Initialisierungslogik: Die Initialisierungslogik ist im Konstruktor
+// gebündelt, was die Wartung vereinfacht, da Änderungen zentral vorgenommen
+// werden können.
+// Vermeidung potenzieller Probleme: Die Verschiebung der Initialisierung in den
+// Konstruktor hilft, potenzielle Probleme wie Thread-Sicherheit oder
+// Initialisierungsreihenfolge zu vermeiden.
+// Einhaltung von Entwurfsprinzipien:
+
+// Prinzip der Einzelverantwortung: Der Konstruktor ist für die Erstellung und
+// Initialisierung des Objekts verantwortlich, während die Felder nur die
+// Datenstruktur definieren. Dies entspricht dem Prinzip der
+// Einzelverantwortung, da die Aufgaben klar getrennt sind.
+// Wahrung der Kapselung: Durch die Initialisierung im Konstruktor kann die
+// Initialisierung des Feldes kontrolliert und gekapselt werden, anstatt
+// komplexe Initialisierungen direkt bei der Deklaration der Felder vorzunehmen.

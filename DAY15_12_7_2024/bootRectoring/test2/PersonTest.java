@@ -1,7 +1,8 @@
-package DAY15_11_2024.bootRectoring.test2;
+package DAY15_12_7_2024.bootRectoring.test2;
 
-import DAY15_11_2024.bootRectoring.*;
 import java.time.LocalDateTime;
+
+import DAY15_12_7_2024.bootRectoring.*;
 
 public class PersonTest {
     private Person person;
